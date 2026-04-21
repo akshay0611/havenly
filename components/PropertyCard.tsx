@@ -19,7 +19,7 @@ export function PropertyCard({ property, variant = 'default', priority = false }
     <Link href={`/property/${property.id}`} className="group cursor-pointer block border-0">
       <div className="flex flex-col gap-3">
         {/* Image Container */}
-        <div className="relative overflow-hidden rounded-[14px] bg-muted aspect-square">
+        <div className="relative overflow-hidden rounded-[14px] bg-muted aspect-[20/19]">
           <Image
             src={property.image}
             alt={property.title}
@@ -56,12 +56,12 @@ export function PropertyCard({ property, variant = 'default', priority = false }
         <div className="flex flex-col gap-0.5 mt-1">
           {/* Title Row */}
           <h3 className="text-[15px] font-semibold text-foreground leading-tight truncate">
-            {property.title} {property.location.city && `in ${property.location.city}`}
+            {property.title}
           </h3>
 
           {/* Price and Rating Row */}
           <p className="text-[15px] text-muted-foreground leading-tight truncate flex items-center">
-            <span>${Math.round(property.pricePerNight * 2)} for 2 nights</span>
+            <span className="text-foreground">₹{Math.round(property.pricePerNight * 100).toLocaleString()} for 2 nights</span>
             <span className="mx-1.5 font-bold">·</span>
             <span className="flex items-center gap-1">
               <Star size={11} className="fill-foreground text-foreground" />
