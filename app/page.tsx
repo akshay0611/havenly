@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { Navbar } from '@/components/Navbar';
-import { CategoryFilter } from '@/components/CategoryFilter';
 import { PropertyCard } from '@/components/PropertyCard';
 import { properties } from '@/lib/dummy-data';
 
@@ -17,12 +16,6 @@ export default function Home() {
     <main className="min-h-screen bg-background">
       {/* Navbar */}
       <Navbar />
-
-      {/* Category Filter */}
-      <CategoryFilter
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-      />
 
       {/* Properties Grid */}
       <section className="py-6 md:py-8">

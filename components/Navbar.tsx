@@ -12,7 +12,7 @@ export function Navbar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-border bg-white h-[80px] flex flex-col justify-center">
+    <nav className="sticky top-0 z-40 border-b border-border bg-white pb-6 pt-5">
       <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
@@ -25,42 +25,45 @@ export function Navbar() {
             </span>
           </Link>
 
-          {/* Search Bar - Hidden on mobile */}
-          <div className="hidden md:flex flex-1 justify-center px-6">
-            <div className="flex w-full max-w-[340px] items-center gap-2 rounded-full border border-border bg-white px-4 py-2.5 shadow-[0_2px_6px_0_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow cursor-pointer">
-              <span className="text-sm font-medium pl-2 flex-grow truncate text-foreground">Anywhere</span>
-              <span className="h-6 w-[1px] bg-border mx-2"></span>
-              <span className="text-sm font-medium flex-grow truncate text-foreground">Any week</span>
-              <span className="h-6 w-[1px] bg-border mx-2"></span>
-              <span className="text-sm text-muted-foreground mr-2 truncate">Add guests</span>
-              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white shrink-0">
-                <Search size={14} className="stroke-[3]" />
-              </div>
-            </div>
+          {/* Center Tabs - Hidden on mobile */}
+          <div className="hidden md:flex flex-1 justify-center px-6 gap-8 text-[16px]">
+            <Link href="/" className="font-semibold text-foreground relative flex flex-col items-center">
+              Homes
+              <span className="absolute -bottom-2 w-4 border-b-2 border-foreground rounded-full"></span>
+            </Link>
+            <Link href="/" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 px-4 py-1 -my-1 rounded-full transition">
+              Experiences
+            </Link>
+            <Link href="/" className="text-muted-foreground hover:text-foreground hover:bg-muted/50 px-4 py-1 -my-1 rounded-full transition">
+              Services
+            </Link>
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden items-center gap-4 md:flex">
+          {/* Desktop Right Menu */}
+          <div className="hidden items-center gap-2 md:flex">
             <Link href="/host">
-              <Button variant="ghost" size="sm" className="text-foreground">
+              <Button variant="ghost" className="text-sm font-medium text-foreground rounded-full">
                 Become a host
               </Button>
             </Link>
+            <Button variant="ghost" size="icon" className="rounded-full text-foreground hover:bg-muted">
+              {/* Globe Icon simplified as SVG outline */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/><path d="M2 12h20"/></svg>
+            </Button>
 
             {/* User Menu Dropdown */}
             <div className="relative">
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center gap-3 rounded-full border border-border px-3 py-2 hover:shadow-md transition-shadow"
+                className="flex items-center gap-3 rounded-full border border-border px-3 py-2 hover:shadow-md transition-shadow bg-white ml-2"
               >
-                <Menu size={20} className="text-foreground" />
-                <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+                <Menu size={18} className="text-foreground shrink-0" />
+                <div className="h-8 w-8 shrink-0 rounded-full bg-muted flex items-center justify-center overflow-hidden">
                   <Image
                     src="https://api.dicebear.com/7.x/avataaars/svg?seed=John"
                     alt="User"
                     width={32}
                     height={32}
-                    className="rounded-full"
                   />
                 </div>
               </button>
@@ -102,6 +105,34 @@ export function Navbar() {
               <Menu size={24} className="text-foreground" />
             )}
           </button>
+        </div>
+
+        {/* Expanded Search Bar - Desktop */}
+        <div className="hidden md:flex justify-center mt-6 mb-2">
+          <div className="flex w-full max-w-[850px] items-center rounded-full border border-border bg-white shadow-md">
+            {/* Where */}
+            <div className="flex-1 px-8 py-3 hover:bg-muted rounded-full cursor-pointer transition">
+              <div className="text-[12px] font-bold text-foreground tracking-wide">Where</div>
+              <div className="text-[14px] text-muted-foreground truncate">Search destinations</div>
+            </div>
+            <div className="h-8 w-[1px] bg-border shrink-0"></div>
+            {/* When */}
+            <div className="flex-1 px-8 py-3 hover:bg-muted rounded-full cursor-pointer transition">
+              <div className="text-[12px] font-bold text-foreground tracking-wide">When</div>
+              <div className="text-[14px] text-muted-foreground truncate">Add dates</div>
+            </div>
+            <div className="h-8 w-[1px] bg-border shrink-0"></div>
+            {/* Who */}
+            <div className="flex-1 pl-8 pr-2 py-2 hover:bg-muted rounded-full cursor-pointer transition flex items-center justify-between">
+              <div>
+                <div className="text-[12px] font-bold text-foreground tracking-wide">Who</div>
+                <div className="text-[14px] text-muted-foreground truncate">Add guests</div>
+              </div>
+              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary text-white hover:bg-primary/90 shadow-md shrink-0">
+                <Search size={20} className="stroke-[3]" />
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* Mobile Search Bar */}
