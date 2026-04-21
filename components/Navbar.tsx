@@ -1,0 +1,147 @@
+'use client';
+
+import Link from 'next/link';
+import { Search, Menu, X, LogOut, LayoutDashboard, Home } from 'lucide-react';
+import { useState } from 'react';
+import Image from 'next/image';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+
+export function Navbar() {
+  const [isOpen, setIsOpen] = useState(false);
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+
+  return (
+    <nav className="sticky top-0 z-40 border-b border-border bg-white/80 backdrop-blur-md">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between py-4">
+          {/* Logo */}
+          <Link href="/" className="flex items-center gap-2">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white font-bold">
+              H
+            </div>
+            <span className="hidden text-xl font-bold text-foreground sm:inline">
+              Havenly
+            </span>
+          </Link>
+
+          {/* Search Bar - Hidden on mobile */}
+          <div className="hidden md:flex flex-1 max-w-md mx-8">
+            <div className="flex w-full items-center gap-2 rounded-full border border-border bg-muted px-4 py-2">
+              <Search size={18} className="text-muted-foreground" />
+              <Input
+                type="text"
+                placeholder="Search destinations..."
+                className="border-0 bg-transparent placeholder:text-muted-foreground focus:outline-none focus-visible:ring-0"
+              />
+            </div>
+          </div>
+
+          {/* Desktop Menu */}
+          <div className="hidden items-center gap-4 md:flex">
+            <Link href="/host">
+              <Button variant="ghost" size="sm" className="text-foreground">
+                Become a host
+              </Button>
+            </Link>
+
+            {/* User Menu Dropdown */}
+            <div className="relative">
+              <button
+                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                className="flex items-center gap-3 rounded-full border border-border px-3 py-2 hover:shadow-md transition-shadow"
+              >
+                <Menu size={20} className="text-foreground" />
+                <div className="h-8 w-8 rounded-full bg-muted flex items-center justify-center">
+                  <Image
+                    src="https://api.dicebear.com/7.x/avataaars/svg?seed=John"
+                    alt="User"
+                    width={32}
+                    height={32}
+                    className="rounded-full"
+                  />
+                </div>
+              </button>
+
+              {/* Dropdown Menu */}
+              {isUserMenuOpen && (
+                <div className="absolute right-0 top-full mt-2 w-48 rounded-lg border border-border bg-white shadow-lg">
+                  <Link href="/dashboard" className="block">
+                    <button className="w-full px-4 py-2 text-left text-sm font-medium text-foreground hover:bg-muted flex items-center gap-2">
+                      <LayoutDashboard size={16} />
+                      My Bookings
+                    </button>
+                  </Link>
+                  <Link href="/host" className="block">
+                    <button className="w-full px-4 py-2 text-left text-sm font-medium text-foreground hover:bg-muted flex items-center gap-2">
+                      <Home size={16} />
+                      Host Dashboard
+                    </button>
+                  </Link>
+                  <hr className="my-2 border-border" />
+                  <button className="w-full px-4 py-2 text-left text-sm font-medium text-red-600 hover:bg-muted flex items-center gap-2">
+                    <LogOut size={16} />
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Mobile Menu Button */}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className="md:hidden p-2 hover:bg-muted rounded-lg transition"
+            aria-label="Toggle menu"
+          >
+            {isOpen ? (
+              <X size={24} className="text-foreground" />
+            ) : (
+              <Menu size={24} className="text-foreground" />
+            )}
+          </button>
+        </div>
+
+        {/* Mobile Search Bar */}
+        <div className="md:hidden mb-4">
+          <div className="flex items-center gap-2 rounded-full border border-border bg-muted px-4 py-2">
+            <Search size={18} className="text-muted-foreground" />
+            <Input
+              type="text"
+              placeholder="Search..."
+              className="border-0 bg-transparent placeholder:text-muted-foreground focus:outline-none focus-visible:ring-0"
+            />
+          </div>
+        </div>
+
+        {/* Mobile Menu */}
+        {isOpen && (
+          <div className="border-t border-border py-4 md:hidden">
+            <Link href="/dashboard" className="block">
+              <button className="w-full px-4 py-2 text-left font-medium text-foreground hover:bg-muted rounded-lg flex items-center gap-2 mb-2">
+                <LayoutDashboard size={18} />
+                My Bookings
+              </button>
+            </Link>
+            <Link href="/host" className="block">
+              <button className="w-full px-4 py-2 text-left font-medium text-foreground hover:bg-muted rounded-lg flex items-center gap-2 mb-2">
+                <Home size={18} />
+                Host Dashboard
+              </button>
+            </Link>
+            <Link href="/host">
+              <Button variant="ghost" size="sm" className="w-full text-foreground justify-start">
+                Become a host
+              </Button>
+            </Link>
+            <hr className="my-2 border-border" />
+            <button className="w-full px-4 py-2 text-left font-medium text-red-600 hover:bg-muted rounded-lg flex items-center gap-2">
+              <LogOut size={18} />
+              Logout
+            </button>
+          </div>
+        )}
+      </div>
+    </nav>
+  );
+}

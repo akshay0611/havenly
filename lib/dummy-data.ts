@@ -1,0 +1,482 @@
+// Dummy data for Havenly Rental Marketplace
+
+export const categories = [
+  { id: 'beachfront', name: 'Beachfront', icon: 'Palmtree' },
+  { id: 'mountains', name: 'Mountains', icon: 'Mountain' },
+  { id: 'city', name: 'City', icon: 'Building2' },
+  { id: 'countryside', name: 'Countryside', icon: 'Trees' },
+  { id: 'luxury', name: 'Luxury', icon: 'Crown' },
+  { id: 'cozy', name: 'Cozy', icon: 'Home' },
+  { id: 'unique', name: 'Unique', icon: 'Sparkles' },
+  { id: 'pool', name: 'Pool', icon: 'Waves' },
+];
+
+export const amenities = [
+  { id: 'wifi', name: 'WiFi', icon: 'Wifi' },
+  { id: 'kitchen', name: 'Kitchen', icon: 'UtensilsCrossed' },
+  { id: 'ac', name: 'Air Conditioning', icon: 'Wind' },
+  { id: 'pool', name: 'Pool', icon: 'Waves' },
+  { id: 'parking', name: 'Parking', icon: 'ParkingCircle' },
+  { id: 'washer', name: 'Washer', icon: 'Droplet' },
+  { id: 'dryer', name: 'Dryer', icon: 'Wind' },
+  { id: 'heating', name: 'Heating', icon: 'Flame' },
+  { id: 'tv', name: 'TV', icon: 'Tv' },
+  { id: 'workspace', name: 'Workspace', icon: 'Laptop' },
+  { id: 'pets', name: 'Pets Allowed', icon: 'PawPrint' },
+  { id: 'garden', name: 'Garden', icon: 'Flower' },
+];
+
+export interface Property {
+  id: string;
+  title: string;
+  description: string;
+  image: string;
+  images: string[];
+  location: {
+    city: string;
+    state: string;
+    country: string;
+    coordinates: { lat: number; lng: number };
+  };
+  pricePerNight: number;
+  rating: number;
+  reviewCount: number;
+  category: string;
+  type: 'Entire Place' | 'Room' | 'Shared Room';
+  capacity: {
+    guests: number;
+    bedrooms: number;
+    beds: number;
+    bathrooms: number;
+  };
+  amenities: string[];
+  hostId: string;
+  createdAt: Date;
+  bookings?: string[];
+}
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  avatar: string;
+  isHost: boolean;
+  joinedDate: Date;
+  bio?: string;
+  responseRate?: number;
+  responseTime?: string;
+}
+
+export interface Booking {
+  id: string;
+  propertyId: string;
+  guestId: string;
+  checkIn: Date;
+  checkOut: Date;
+  guests: number;
+  totalPrice: number;
+  status: 'confirmed' | 'cancelled' | 'completed' | 'upcoming';
+  createdAt: Date;
+}
+
+export interface Review {
+  id: string;
+  propertyId: string;
+  guestId: string;
+  guestName: string;
+  guestAvatar: string;
+  rating: number;
+  comment: string;
+  createdAt: Date;
+}
+
+// Host users
+export const hosts: User[] = [
+  {
+    id: 'host-1',
+    name: 'Sarah Johnson',
+    email: 'sarah@example.com',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah',
+    isHost: true,
+    joinedDate: new Date('2020-01-15'),
+    bio: 'Passionate about hosting and making guests feel at home.',
+    responseRate: 98,
+    responseTime: '1 hour',
+  },
+  {
+    id: 'host-2',
+    name: 'Michael Chen',
+    email: 'michael@example.com',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Michael',
+    isHost: true,
+    joinedDate: new Date('2019-06-20'),
+    bio: 'Luxury property specialist.',
+    responseRate: 100,
+    responseTime: '30 minutes',
+  },
+  {
+    id: 'host-3',
+    name: 'Emma Williams',
+    email: 'emma@example.com',
+    avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Emma',
+    isHost: true,
+    joinedDate: new Date('2021-03-10'),
+    bio: 'Love sharing my beachfront properties.',
+    responseRate: 95,
+    responseTime: '2 hours',
+  },
+];
+
+// Guest user
+export const currentUser: User = {
+  id: 'guest-1',
+  name: 'John Smith',
+  email: 'john@example.com',
+  avatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
+  isHost: false,
+  joinedDate: new Date('2022-05-01'),
+};
+
+// Properties
+export const properties: Property[] = [
+  {
+    id: 'prop-1',
+    title: 'Stunning Beachfront Villa',
+    description: 'Beautiful modern villa with ocean views, private beach access, and luxurious amenities.',
+    image: 'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1499793983690-e29da59ef1c2?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1473116763249-2faaef81ccda?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1519046904884-53103b34b206?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Malibu',
+      state: 'California',
+      country: 'United States',
+      coordinates: { lat: 34.0195, lng: -118.6814 },
+    },
+    pricePerNight: 450,
+    rating: 4.9,
+    reviewCount: 186,
+    category: 'beachfront',
+    type: 'Entire Place',
+    capacity: {
+      guests: 8,
+      bedrooms: 4,
+      beds: 5,
+      bathrooms: 3,
+    },
+    amenities: ['wifi', 'kitchen', 'ac', 'pool', 'parking', 'washer', 'dryer', 'heating', 'tv', 'garden'],
+    hostId: 'host-1',
+    createdAt: new Date('2020-01-15'),
+  },
+  {
+    id: 'prop-2',
+    title: 'Cozy Mountain Cabin',
+    description: 'Perfect retreat in the mountains with fireplace, hot tub, and hiking trails nearby.',
+    image: 'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1510312305653-8ed496efbe75?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Aspen',
+      state: 'Colorado',
+      country: 'United States',
+      coordinates: { lat: 39.1911, lng: -106.8175 },
+    },
+    pricePerNight: 280,
+    rating: 4.8,
+    reviewCount: 142,
+    category: 'mountains',
+    type: 'Entire Place',
+    capacity: {
+      guests: 6,
+      bedrooms: 3,
+      beds: 4,
+      bathrooms: 2,
+    },
+    amenities: ['wifi', 'kitchen', 'heating', 'tv', 'workspace'],
+    hostId: 'host-2',
+    createdAt: new Date('2019-06-20'),
+  },
+  {
+    id: 'prop-3',
+    title: 'Luxury Downtown Penthouse',
+    description: 'Stunning city views, modern design, rooftop access, and concierge service included.',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1600566752355-3979ff696fe9?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'New York',
+      state: 'New York',
+      country: 'United States',
+      coordinates: { lat: 40.7128, lng: -74.006 },
+    },
+    pricePerNight: 550,
+    rating: 4.95,
+    reviewCount: 234,
+    category: 'luxury',
+    type: 'Entire Place',
+    capacity: {
+      guests: 6,
+      bedrooms: 3,
+      beds: 3,
+      bathrooms: 2.5,
+    },
+    amenities: ['wifi', 'kitchen', 'ac', 'pool', 'parking', 'washer', 'dryer', 'tv', 'workspace'],
+    hostId: 'host-2',
+    createdAt: new Date('2019-06-20'),
+  },
+  {
+    id: 'prop-4',
+    title: 'Charming Countryside Cottage',
+    description: 'Rural escape with garden, farm animals, and peaceful surroundings. Perfect for families.',
+    image: 'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1518780664697-55e3ad937233?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1500382017468-9049fee74a62?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Tuscany',
+      state: 'Tuscany',
+      country: 'Italy',
+      coordinates: { lat: 43.2, lng: 11.88 },
+    },
+    pricePerNight: 150,
+    rating: 4.7,
+    reviewCount: 98,
+    category: 'countryside',
+    type: 'Entire Place',
+    capacity: {
+      guests: 4,
+      bedrooms: 2,
+      beds: 2,
+      bathrooms: 1,
+    },
+    amenities: ['wifi', 'kitchen', 'heating', 'garden', 'pets'],
+    hostId: 'host-3',
+    createdAt: new Date('2021-03-10'),
+  },
+  {
+    id: 'prop-5',
+    title: 'Modern City Apartment',
+    description: 'Stylish studio in the heart of the city. Close to restaurants, shops, and attractions.',
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Paris',
+      state: 'Île-de-France',
+      country: 'France',
+      coordinates: { lat: 48.8566, lng: 2.3522 },
+    },
+    pricePerNight: 120,
+    rating: 4.6,
+    reviewCount: 67,
+    category: 'city',
+    type: 'Room',
+    capacity: {
+      guests: 2,
+      bedrooms: 1,
+      beds: 1,
+      bathrooms: 1,
+    },
+    amenities: ['wifi', 'kitchen', 'ac', 'tv'],
+    hostId: 'host-1',
+    createdAt: new Date('2020-01-15'),
+  },
+  {
+    id: 'prop-6',
+    title: 'Tropical Paradise Pool House',
+    description: 'Gorgeous pool villa in tropical setting with lush gardens and private beach access.',
+    image: 'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1540541338287-41700207dee6?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Bali',
+      state: 'Bali',
+      country: 'Indonesia',
+      coordinates: { lat: -8.6705, lng: 115.2126 },
+    },
+    pricePerNight: 200,
+    rating: 4.85,
+    reviewCount: 156,
+    category: 'pool',
+    type: 'Entire Place',
+    capacity: {
+      guests: 5,
+      bedrooms: 2,
+      beds: 3,
+      bathrooms: 2,
+    },
+    amenities: ['wifi', 'kitchen', 'ac', 'pool', 'heating', 'garden', 'pets'],
+    hostId: 'host-3',
+    createdAt: new Date('2021-03-10'),
+  },
+  {
+    id: 'prop-7',
+    title: 'Modern Minimalist Loft',
+    description: 'Industrial-style loft with high ceilings and city skyline views.',
+    image: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Berlin',
+      state: 'Berlin',
+      country: 'Germany',
+      coordinates: { lat: 52.52, lng: 13.405 },
+    },
+    pricePerNight: 110,
+    rating: 4.75,
+    reviewCount: 42,
+    category: 'city',
+    type: 'Entire Place',
+    capacity: {
+      guests: 3,
+      bedrooms: 1,
+      beds: 2,
+      bathrooms: 1,
+    },
+    amenities: ['wifi', 'kitchen', 'heating', 'tv', 'workspace'],
+    hostId: 'host-1',
+    createdAt: new Date('2023-01-10'),
+  },
+  {
+    id: 'prop-8',
+    title: 'Secluded A-Frame in the Woods',
+    description: 'Unique architectural gem surrounded by pine forest and mountain views.',
+    image: 'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=800&h=600&fit=crop',
+    images: [
+      'https://images.unsplash.com/photo-1470770841072-f978cf4d019e?w=1200&h=800&fit=crop',
+      'https://images.unsplash.com/photo-1510312305653-8ed496efbe75?w=1200&h=800&fit=crop',
+    ],
+    location: {
+      city: 'Lake Tahoe',
+      state: 'California',
+      country: 'United States',
+      coordinates: { lat: 39.0968, lng: -120.0324 },
+    },
+    pricePerNight: 220,
+    rating: 4.88,
+    reviewCount: 75,
+    category: 'unique',
+    type: 'Entire Place',
+    capacity: {
+      guests: 4,
+      bedrooms: 2,
+      beds: 2,
+      bathrooms: 1,
+    },
+    amenities: ['wifi', 'kitchen', 'heating', 'garden', 'pets'],
+    hostId: 'host-2',
+    createdAt: new Date('2022-11-15'),
+  },
+];
+
+
+// Bookings
+export const bookings: Booking[] = [
+  {
+    id: 'booking-1',
+    propertyId: 'prop-1',
+    guestId: 'guest-1',
+    checkIn: new Date('2025-06-15'),
+    checkOut: new Date('2025-06-22'),
+    guests: 4,
+    totalPrice: 3150,
+    status: 'confirmed',
+    createdAt: new Date('2025-05-01'),
+  },
+  {
+    id: 'booking-2',
+    propertyId: 'prop-2',
+    guestId: 'guest-1',
+    checkIn: new Date('2025-07-01'),
+    checkOut: new Date('2025-07-08'),
+    guests: 2,
+    totalPrice: 1960,
+    status: 'upcoming',
+    createdAt: new Date('2025-05-15'),
+  },
+  {
+    id: 'booking-3',
+    propertyId: 'prop-3',
+    guestId: 'guest-1',
+    checkIn: new Date('2024-12-20'),
+    checkOut: new Date('2024-12-23'),
+    guests: 2,
+    totalPrice: 1650,
+    status: 'completed',
+    createdAt: new Date('2024-11-01'),
+  },
+  {
+    id: 'booking-4',
+    propertyId: 'prop-5',
+    guestId: 'guest-1',
+    checkIn: new Date('2025-03-10'),
+    checkOut: new Date('2025-03-15'),
+    guests: 1,
+    totalPrice: 600,
+    status: 'completed',
+    createdAt: new Date('2025-02-01'),
+  },
+];
+
+// Reviews
+export const reviews: Review[] = [
+  {
+    id: 'review-1',
+    propertyId: 'prop-1',
+    guestId: 'guest-2',
+    guestName: 'Alice Cooper',
+    guestAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Alice',
+    rating: 5,
+    comment: 'Amazing property! The views are incredible and the host was very welcoming. Would definitely return.',
+    createdAt: new Date('2025-04-10'),
+  },
+  {
+    id: 'review-2',
+    propertyId: 'prop-1',
+    guestId: 'guest-3',
+    guestName: 'Bob Wilson',
+    guestAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Bob',
+    rating: 4,
+    comment: 'Great beachfront location. The property was clean and well-maintained. Minor issue with WiFi but quickly resolved.',
+    createdAt: new Date('2025-04-05'),
+  },
+  {
+    id: 'review-3',
+    propertyId: 'prop-2',
+    guestId: 'guest-4',
+    guestName: 'Carol Davis',
+    guestAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=Carol',
+    rating: 5,
+    comment: 'Perfect mountain retreat! Peaceful, beautiful, and the hot tub was a nice touch. Highly recommend!',
+    createdAt: new Date('2025-04-01'),
+  },
+  {
+    id: 'review-4',
+    propertyId: 'prop-3',
+    guestId: 'guest-5',
+    guestName: 'David Miller',
+    guestAvatar: 'https://api.dicebear.com/7.x/avataaars/svg?seed=David',
+    rating: 5,
+    comment: 'Luxury at its finest! The penthouse is absolutely stunning with amazing city views. Will definitely book again.',
+    createdAt: new Date('2025-03-25'),
+  },
+];

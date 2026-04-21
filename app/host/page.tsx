@@ -1,0 +1,222 @@
+'use client';
+
+import Image from 'next/image';
+import Link from 'next/link';
+import { Navbar } from '@/components/Navbar';
+import { Button } from '@/components/ui/button';
+import { Card } from '@/components/ui/card';
+import { properties, hosts, bookings } from '@/lib/dummy-data';
+import { Edit, Trash2, Plus, Eye, Calendar, Users } from 'lucide-react';
+
+export default function HostDashboardPage() {
+  // Get current host's properties
+  const currentHostId = 'host-1'; // Mock current host
+  const hostProperties = properties.filter((p) => p.hostId === currentHostId);
+  const hostBookings = bookings.filter((b) =>
+    hostProperties.some((p) => p.id === b.propertyId)
+  );
+
+  return (
+    <main className="min-h-screen bg-background">
+      <Navbar />
+
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+        {/* Header */}
+        <div className="mb-8 flex items-center justify-between gap-4 flex-wrap">
+          <div>
+            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
+              Host Dashboard
+            </h1>
+            <p className="text-muted-foreground">
+              Manage your properties and bookings
+            </p>
+          </div>
+          <Link href="/host/add">
+            <Button className="bg-primary text-primary-foreground">
+              <Plus size={18} className="mr-2" />
+              Add Property
+            </Button>
+          </Link>
+        </div>
+
+        {/* Stats Cards */}
+        <div className="grid gap-4 md:grid-cols-3 mb-8">
+          <Card className="p-6 border-border">
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              Total Properties
+            </h3>
+            <p className="text-3xl font-bold text-foreground">{hostProperties.length}</p>
+          </Card>
+          <Card className="p-6 border-border">
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              Upcoming Bookings
+            </h3>
+            <p className="text-3xl font-bold text-foreground">
+              {hostBookings.filter((b) => b.status === 'confirmed' || b.status === 'upcoming').length}
+            </p>
+          </Card>
+          <Card className="p-6 border-border">
+            <h3 className="text-sm font-medium text-muted-foreground mb-2">
+              Avg Rating
+            </h3>
+            <p className="text-3xl font-bold text-foreground">
+              {(
+                hostProperties.reduce((sum, p) => sum + p.rating, 0) /
+                (hostProperties.length || 1)
+              ).toFixed(2)}
+            </p>
+          </Card>
+        </div>
+
+        {/* Properties Table */}
+        <Card className="border-border overflow-hidden mb-8">
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-border bg-muted">
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                    Property
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-foreground hidden md:table-cell">
+                    Location
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                    Price/Night
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-foreground hidden lg:table-cell">
+                    Rating
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-semibold text-foreground">
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                {hostProperties.map((property) => (
+                  <tr key={property.id} className="hover:bg-muted transition">
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-lg bg-muted">
+                          <Image
+                            src={property.image}
+                            alt={property.title}
+                            fill
+                            className="object-cover"
+                            sizes="40px"
+                          />
+                        </div>
+                        <div className="min-w-0 flex-1">
+                          <p className="text-sm font-medium text-foreground truncate">
+                            {property.title}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {property.capacity.bedrooms} beds
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 text-sm text-foreground hidden md:table-cell">
+                      {property.location.city}, {property.location.state}
+                    </td>
+                    <td className="px-6 py-4 text-sm font-semibold text-foreground">
+                      ${property.pricePerNight}
+                    </td>
+                    <td className="px-6 py-4 text-sm text-foreground hidden lg:table-cell">
+                      {property.rating.toFixed(2)} ★
+                    </td>
+                    <td className="px-6 py-4">
+                      <div className="flex gap-2 flex-wrap">
+                        <Link href={`/property/${property.id}`}>
+                          <button className="p-2 hover:bg-muted rounded transition" title="View">
+                            <Eye size={16} className="text-foreground" />
+                          </button>
+                        </Link>
+                        <button className="p-2 hover:bg-muted rounded transition" title="Edit">
+                          <Edit size={16} className="text-foreground" />
+                        </button>
+                        <button className="p-2 hover:bg-red-100 text-red-600 rounded transition" title="Delete">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </Card>
+
+        {/* Booking Requests */}
+        <div>
+          <h2 className="text-2xl font-bold text-foreground mb-6">
+            Recent Booking Requests
+          </h2>
+          <div className="space-y-4">
+            {hostBookings.slice(0, 5).map((booking) => {
+              const property = properties.find((p) => p.id === booking.propertyId);
+              if (!property) return null;
+
+              return (
+                <Card key={booking.id} className="p-6 border-border">
+                  <div className="flex items-start justify-between gap-4 mb-4">
+                    <div className="flex-1">
+                      <h3 className="font-semibold text-foreground mb-2">
+                        {property.title}
+                      </h3>
+                      <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 text-sm text-muted-foreground flex-wrap">
+                        <div className="flex items-center gap-1">
+                          <Calendar size={16} />
+                          {booking.checkIn.toLocaleDateString()} -{' '}
+                          {booking.checkOut.toLocaleDateString()}
+                        </div>
+                        <div className="flex items-center gap-1">
+                          <Users size={16} />
+                          {booking.guests} guest{booking.guests !== 1 ? 's' : ''}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <span
+                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+                          booking.status === 'confirmed'
+                            ? 'bg-green-100 text-green-800'
+                            : 'bg-blue-100 text-blue-800'
+                        }`}
+                      >
+                        {booking.status.charAt(0).toUpperCase() +
+                          booking.status.slice(1)}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex gap-3 pt-4 border-t border-border">
+                    <Button variant="outline" size="sm">
+                      Accept
+                    </Button>
+                    <Button variant="outline" size="sm">
+                      Decline
+                    </Button>
+                  </div>
+                </Card>
+              );
+            })}
+
+            {hostBookings.length === 0 && (
+              <Card className="p-8 border-border text-center">
+                <p className="text-muted-foreground">No booking requests</p>
+              </Card>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <footer className="border-t border-border bg-muted py-12 mt-16">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <p className="text-center text-sm text-muted-foreground">
+            © 2025 Airbnb, Inc. All rights reserved.
+          </p>
+        </div>
+      </footer>
+    </main>
+  );
+}
