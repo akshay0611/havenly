@@ -17,31 +17,72 @@ export default function Home() {
       {/* Navbar */}
       <Navbar />
 
-      {/* Properties Grid */}
-      <section className="py-6 md:py-8">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          {filteredProperties.length > 0 ? (
-            <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-              {filteredProperties.map((property, index) => (
-                <PropertyCard 
-                  key={property.id} 
-                  property={property} 
-                  priority={index < 8}
-                />
-              ))}
-            </div>
-          ) : (
-            <div className="flex flex-col items-center justify-center py-12">
-              <div className="text-center">
-                <h2 className="text-2xl font-bold text-foreground mb-2">
-                  No properties found
-                </h2>
-                <p className="text-muted-foreground">
-                  Try adjusting your search or selecting a different category.
-                </p>
+      {/* Properties Sections */}
+      <section className="py-6 md:py-8 space-y-12">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+          
+          {/* Section 1: Varanasi */}
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 cursor-pointer group">
+                <h2 className="text-[22px] font-semibold text-foreground tracking-tight">Popular homes in Varanasi</h2>
+                <span className="text-foreground transition-transform group-hover:translate-x-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+              </div>
+              <div className="hidden md:flex items-center gap-2">
+                <button className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] hover:scale-[1.04] transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] hover:scale-[1.04] transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
               </div>
             </div>
-          )}
+
+            <div className="flex overflow-x-auto gap-4 sm:gap-6 pb-4 sm:pb-6 snap-x snap-mandatory hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+              {filteredProperties.slice(0, 6).map((property, index) => (
+                <div key={property.id} className="min-w-[85vw] sm:min-w-[45vw] md:min-w-[calc(33.333%-16px)] lg:min-w-[calc(25%-18px)] snap-start shrink-0">
+                  <PropertyCard 
+                    property={{...property, location: {...property.location, city: 'Varanasi'}}} 
+                    priority={index < 4}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Section 2: Kolkata */}
+          <div className="mt-4">
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-2 cursor-pointer group">
+                <h2 className="text-[22px] font-semibold text-foreground tracking-tight">Available in Kolkata this weekend</h2>
+                <span className="text-foreground transition-transform group-hover:translate-x-0.5">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </span>
+              </div>
+              <div className="hidden md:flex items-center gap-2">
+                <button className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] hover:scale-[1.04] transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                </button>
+                <button className="flex h-8 w-8 items-center justify-center rounded-full border border-black/10 bg-white shadow-[0_1px_3px_0_rgba(0,0,0,0.1)] hover:shadow-[0_2px_4px_0_rgba(0,0,0,0.15)] hover:scale-[1.04] transition">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                </button>
+              </div>
+            </div>
+
+            <div className="flex overflow-x-auto gap-4 sm:gap-6 pb-4 sm:pb-6 snap-x snap-mandatory hide-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+              {filteredProperties.slice(6, 12).map((property, index) => (
+                <div key={property.id} className="min-w-[85vw] sm:min-w-[45vw] md:min-w-[calc(33.333%-16px)] lg:min-w-[calc(25%-18px)] snap-start shrink-0">
+                  <PropertyCard 
+                    property={{...property, location: {...property.location, city: 'Kolkata'}}} 
+                    priority={false}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
         </div>
       </section>
 
