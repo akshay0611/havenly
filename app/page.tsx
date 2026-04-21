@@ -24,32 +24,16 @@ export default function Home() {
         onCategoryChange={setSelectedCategory}
       />
 
-      {/* Hero Section */}
-      <section className="bg-gradient-to-b from-primary/5 to-transparent py-8 md:py-12">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div>
-            <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-              {selectedCategory
-                ? `${selectedCategory.charAt(0).toUpperCase() + selectedCategory.slice(1)} Stays`
-                : 'Explore Amazing Stays'}
-            </h1>
-            <p className="text-muted-foreground text-base md:text-lg">
-              {filteredProperties.length} properties available
-            </p>
-          </div>
-        </div>
-      </section>
-
       {/* Properties Grid */}
-      <section className="py-12 md:py-16">
+      <section className="py-6 md:py-8">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {filteredProperties.length > 0 ? (
-            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
+            <div className="grid gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
               {filteredProperties.map((property, index) => (
                 <PropertyCard 
                   key={property.id} 
                   property={property} 
-                  priority={index < 4}
+                  priority={index < 8}
                 />
               ))}
             </div>

@@ -106,7 +106,7 @@ export function CategoryFilter({
                 onClick={() => onCategoryChange?.(category.id)}
                 className={`flex flex-col items-center gap-2 flex-shrink-0 py-2 px-2 rounded-lg transition-all border-b-2 ${
                   selectedCategory === category.id
-                    ? 'border-primary text-primary'
+                    ? 'border-foreground text-foreground'
                     : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
                 }`}
               >

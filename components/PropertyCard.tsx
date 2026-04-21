@@ -16,19 +16,22 @@ export function PropertyCard({ property, variant = 'default', priority = false }
   const [isSaved, setIsSaved] = useState(false);
 
   return (
-    <Link href={`/property/${property.id}`}>
-      <div className="group cursor-pointer">
+    <Link href={`/property/${property.id}`} className="group cursor-pointer block border-0">
+      <div className="flex flex-col gap-3">
         {/* Image Container */}
-        <div className="relative mb-3 overflow-hidden rounded-xl bg-muted">
-          <div className="aspect-square relative">
-            <Image
-              src={property.image}
-              alt={property.title}
-              fill
-              className="object-cover transition-transform duration-300 group-hover:scale-105"
-              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-              priority={priority}
-            />
+        <div className="relative overflow-hidden rounded-[14px] bg-muted aspect-square">
+          <Image
+            src={property.image}
+            alt={property.title}
+            fill
+            className="object-cover transition-transform duration-300 group-hover:scale-105"
+            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+            priority={priority}
+          />
+
+          {/* Badge */}
+          <div className="absolute left-3 top-3 rounded-full bg-white shadow-md border border-black/5 px-3 py-1 text-[13px] font-medium text-foreground">
+            Guest favourite
           </div>
 
           {/* Favorite Button */}
@@ -37,53 +40,34 @@ export function PropertyCard({ property, variant = 'default', priority = false }
               e.preventDefault();
               setIsSaved(!isSaved);
             }}
-            className="absolute right-3 top-3 rounded-full bg-white/80 p-2 backdrop-blur-sm transition-all hover:bg-white"
+            className="absolute right-3 top-3 flex items-center justify-center p-2 transition-transform hover:scale-105"
             aria-label="Save property"
           >
             <Heart
-              size={20}
-              className={`transition-colors ${
-                isSaved ? 'fill-red-500 text-red-500' : 'text-foreground'
+              size={24}
+              className={`transition-colors drop-shadow-md ${
+                isSaved ? 'fill-primary text-primary' : 'fill-black/30 text-white stroke-[1.5]'
               }`}
             />
           </button>
-
-          {/* Badge */}
-          {property.category && (
-            <div className="absolute left-3 top-3 rounded-full bg-black/60 px-3 py-1 text-xs font-medium text-white capitalize">
-              {property.category}
-            </div>
-          )}
         </div>
 
         {/* Content */}
-        <div className="space-y-1">
-          {/* Title */}
-          <h3 className="text-base font-semibold text-foreground line-clamp-2 group-hover:text-primary transition-colors">
-            {property.title}
+        <div className="flex flex-col gap-0.5 mt-1">
+          {/* Title Row */}
+          <h3 className="text-[15px] font-semibold text-foreground leading-tight truncate">
+            {property.title} {property.location.city && `in ${property.location.city}`}
           </h3>
 
-          {/* Location */}
-          <p className="text-sm text-muted-foreground">
-            {property.location.city}, {property.location.state}
+          {/* Price and Rating Row */}
+          <p className="text-[15px] text-muted-foreground leading-tight truncate flex items-center">
+            <span>${Math.round(property.pricePerNight * 2)} for 2 nights</span>
+            <span className="mx-1.5 font-bold">·</span>
+            <span className="flex items-center gap-1">
+              <Star size={11} className="fill-foreground text-foreground" />
+              {property.rating.toFixed(2)}
+            </span>
           </p>
-
-          {/* Rating and Price Row */}
-          <div className="flex items-center justify-between pt-2">
-            <div className="flex items-center gap-1">
-              <Star size={16} className="fill-foreground text-foreground" />
-              <span className="text-sm font-medium">
-                {property.rating.toFixed(2)}
-              </span>
-              <span className="text-xs text-muted-foreground">
-                ({property.reviewCount})
-              </span>
-            </div>
-            <p className="text-sm font-semibold text-foreground">
-              ${property.pricePerNight}
-              <span className="text-xs font-normal text-muted-foreground">/night</span>
-            </p>
-          </div>
         </div>
       </div>
     </Link>

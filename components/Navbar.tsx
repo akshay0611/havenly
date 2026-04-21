@@ -12,28 +12,30 @@ export function Navbar() {
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-40 border-b border-border bg-white/80 backdrop-blur-md">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between py-4">
+    <nav className="sticky top-0 z-40 border-b border-border bg-white h-[80px] flex flex-col justify-center">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2">
-            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-white font-bold">
-              H
-            </div>
-            <span className="hidden text-xl font-bold text-foreground sm:inline">
-              Havenly
+          <Link href="/" className="flex items-center gap-2 text-primary">
+            <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+              <path d="M16 1.333c-8.095 0-14.667 6.572-14.667 14.667 0 8.096 6.572 14.667 14.667 14.667s14.667-6.571 14.667-14.667c0-8.095-6.572-14.667-14.667-14.667zm0 2.667c6.636 0 12 5.364 12 12s-5.364 12-12 12-12-5.364-12-12 5.364-12 12-12zM12 9v14h2.667v-6.667h2.666v6.667h2.667V9h-2.667v4.667h-2.666V9H12z"/>
+            </svg>
+            <span className="hidden text-xl font-bold tracking-tight sm:inline">
+              havenly
             </span>
           </Link>
 
           {/* Search Bar - Hidden on mobile */}
-          <div className="hidden md:flex flex-1 max-w-md mx-8">
-            <div className="flex w-full items-center gap-2 rounded-full border border-border bg-muted px-4 py-2">
-              <Search size={18} className="text-muted-foreground" />
-              <Input
-                type="text"
-                placeholder="Search destinations..."
-                className="border-0 bg-transparent placeholder:text-muted-foreground focus:outline-none focus-visible:ring-0"
-              />
+          <div className="hidden md:flex flex-1 justify-center px-6">
+            <div className="flex w-full max-w-[340px] items-center gap-2 rounded-full border border-border bg-white px-4 py-2.5 shadow-[0_2px_6px_0_rgba(0,0,0,0.04)] hover:shadow-md transition-shadow cursor-pointer">
+              <span className="text-sm font-medium pl-2 flex-grow truncate text-foreground">Anywhere</span>
+              <span className="h-6 w-[1px] bg-border mx-2"></span>
+              <span className="text-sm font-medium flex-grow truncate text-foreground">Any week</span>
+              <span className="h-6 w-[1px] bg-border mx-2"></span>
+              <span className="text-sm text-muted-foreground mr-2 truncate">Add guests</span>
+              <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary text-white shrink-0">
+                <Search size={14} className="stroke-[3]" />
+              </div>
             </div>
           </div>
 
