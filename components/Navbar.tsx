@@ -56,12 +56,15 @@ export function Navbar() {
               <button
                 onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
                 className="flex items-center gap-3 rounded-full border border-border px-3 py-2 hover:shadow-md transition-shadow bg-white ml-2"
+                aria-label="User Menu"
+                aria-haspopup="true"
+                aria-expanded={isUserMenuOpen}
               >
                 <Menu size={18} className="text-foreground shrink-0" />
                 <div className="h-8 w-8 shrink-0 rounded-full bg-muted flex items-center justify-center overflow-hidden">
                   <Image
                     src="https://api.dicebear.com/7.x/avataaars/svg?seed=John"
-                    alt="User"
+                    alt="User Profile Picture"
                     width={32}
                     height={32}
                   />
