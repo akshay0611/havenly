@@ -62,7 +62,7 @@ export function Navbar() {
             >
               Services
             </Link>
-<Link
+        <Link
               href="/favorites"
               className={`relative flex flex-col items-center ${
                 pathname === "/favorites"

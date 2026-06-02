@@ -3,8 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Heart, Star } from 'lucide-react';
-import { useState } from 'react';
-import { Property } from '@/lib/dummy-data';
+import { useState, useEffect } from 'react';
+
+interface Property {
+  id: string;
+  title: string;
+  image: string;
+  pricePerNight: number;
+  rating: number;
+}
 
 interface PropertyCardProps {
   property: Property;
@@ -14,6 +21,31 @@ interface PropertyCardProps {
 
 export function PropertyCard({ property, variant = 'default', priority = false }: PropertyCardProps) {
   const [isSaved, setIsSaved] = useState(false);
+
+  // Load favorites from localStorage
+  useEffect(() => {
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+    setIsSaved(favorites.some((item: Property) => item.id === property.id));
+  }, [property.id]);
+
+  const handleSave = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation(); 
+
+    const favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+
+    if (isSaved) {
+      // Remove from favorites
+      const updatedFavorites = favorites.filter((item: Property) => item.id !== property.id);
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      setIsSaved(false);
+    } else {
+      // Add to favorites
+      const updatedFavorites = [...favorites, property];
+      localStorage.setItem('favorites', JSON.stringify(updatedFavorites));
+      setIsSaved(true);
+    }
+  };
 
   return (
     <Link href={`/property/${property.id}`} className="group cursor-pointer block border-0">
@@ -36,17 +68,15 @@ export function PropertyCard({ property, variant = 'default', priority = false }
 
           {/* Favorite Button */}
           <button
-            onClick={(e) => {
-              e.preventDefault();
-              setIsSaved(!isSaved);
-            }}
+            type="button"
+            onClick={handleSave}
             className="absolute right-3 top-3 flex items-center justify-center p-2 transition-transform hover:scale-105"
             aria-label="Save property"
           >
             <Heart
               size={24}
               className={`transition-colors drop-shadow-md ${
-                isSaved ? 'fill-primary text-primary' : 'fill-black/30 text-white stroke-[1.5]'
+                isSaved ? 'fill-red-500 text-red-500' : 'fill-black/30 text-white stroke-[1.5]'
               }`}
             />
           </button>
@@ -54,14 +84,14 @@ export function PropertyCard({ property, variant = 'default', priority = false }
 
         {/* Content */}
         <div className="flex flex-col gap-0.5 mt-1">
-          {/* Title Row */}
           <h3 className="text-[15px] font-semibold text-foreground leading-tight truncate">
             {property.title}
           </h3>
 
-          {/* Price and Rating Row */}
           <p className="text-[15px] text-muted-foreground leading-tight truncate flex items-center">
-            <span className="text-foreground">₹{Math.round(property.pricePerNight * 100).toLocaleString()} for 2 nights</span>
+            <span className="text-foreground">
+              ₹{Math.round(property.pricePerNight).toLocaleString()} for 2 nights
+            </span>
             <span className="mx-1.5 font-bold">·</span>
             <span className="flex items-center gap-1">
               <Star size={11} className="fill-foreground text-foreground" />
