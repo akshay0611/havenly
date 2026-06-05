@@ -2,13 +2,18 @@
 
 import Link from 'next/link';
 import { Search, Menu, X, LogOut, LayoutDashboard, Home } from 'lucide-react';
+<<<<<<< Updated upstream
 import { usePathname } from "next/navigation";
+=======
+import { usePathname } from 'next/navigation';
+>>>>>>> Stashed changes
 import { useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 
 export function Navbar() {
+  const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const pathname = usePathname();
@@ -27,6 +32,7 @@ export function Navbar() {
           </Link>
 
           {/* Center Tabs - Hidden on mobile */}
+<<<<<<< Updated upstream
           <div className="hidden md:flex flex-1 justify-center px-6 gap-8 text-[16px]">
             <Link
               href="/"
@@ -49,6 +55,22 @@ export function Navbar() {
                   ? "font-semibold text-foreground"
                   : "text-muted-foreground hover:text-foreground"
               }`}
+=======
+          <div className="hidden md:flex flex-1 justify-center px-6 gap-8 text-[16px] items-center">
+            <Link 
+              href="/" 
+              className={pathname === '/' 
+                ? "font-semibold text-foreground relative flex flex-col items-center" 
+                : "text-muted-foreground hover:text-foreground hover:bg-muted/50 px-4 py-1 -my-1 rounded-full transition"
+              }
+            >
+              Homes
+              {pathname === '/' && <span className="absolute -bottom-2 w-4 border-b-2 border-foreground rounded-full"></span>}
+            </Link>
+            <Link 
+              href="/" 
+              className="text-muted-foreground hover:text-foreground hover:bg-muted/50 px-4 py-1 -my-1 rounded-full transition"
+>>>>>>> Stashed changes
             >
               Experiences
               {pathname === "/experiences" && (
