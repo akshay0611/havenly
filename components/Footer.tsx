@@ -119,9 +119,9 @@ export function Footer() {
             <span>·</span>
             <Link href="/terms" className="hover:underline">Terms</Link>
             <span>·</span>
-            <a href="#" className="hover:underline">Sitemap</a>
+            <Link href="/sitemap" className="hover:underline">Sitemap</Link>
             <span>·</span>
-            <a href="#" className="hover:underline">Company details</a>
+            <Link href="/company-details" className="hover:underline">Company details</Link>
           </div>
 
           <div className="flex items-center gap-6">
