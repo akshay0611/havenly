@@ -86,7 +86,7 @@ export function Footer() {
             <ul className="space-y-3 text-sm text-muted-foreground">
               <li><a href="#" className="hover:underline">Havenly your home</a></li>
               <li><a href="#" className="hover:underline">AirCover for Hosts</a></li>
-              <li><a href="#" className="hover:underline">Hosting resources</a></li>
+              <li><a href="/hosting-resources" className="hover:underline">Hosting resources</a></li>
               <li><a href="#" className="hover:underline">Community forum</a></li>
               <li><a href="#" className="hover:underline">Hosting responsibly</a></li>
               <li><a href="#" className="hover:underline">Join a free hosting class</a></li>
