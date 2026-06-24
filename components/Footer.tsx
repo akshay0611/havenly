@@ -89,7 +89,7 @@ export function Footer() {
               <li><a href="/hosting-resources" className="hover:underline">Hosting resources</a></li>
               <li><a href="#" className="hover:underline">Community forum</a></li>
               <li><Link href="/hosting-responsibility" className="hover:underline">Hosting responsibly</Link></li>
-              <li><a href="#" className="hover:underline">Join a free hosting class</a></li>
+              <li><a href="/free-hosting-class" className="hover:underline">Join a free hosting class</a></li>
             </ul>
           </div>
           <div>
