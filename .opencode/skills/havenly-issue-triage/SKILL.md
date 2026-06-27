@@ -1,4 +1,3 @@
----
 name: havenly-issue-triage
 description: >
   Triages GitHub issues for the Havenly rental marketplace (ELUSOC 2026).
@@ -10,6 +9,7 @@ description: >
   assigned. Triggers include: "triage this issue", "assign this", "what label
   for #N", "add label to issue", "assign to contributor", or when a screenshot
   or link to a Havenly issue is shared.
+
 ---
 
 ## ELUSOC Difficulty Labels
@@ -77,16 +77,32 @@ Wait for the maintainer's response before proceeding.
 Once the maintainer confirms the label and provides a username (or overrides the label):
 
 ```bash
-# Apply the difficulty label
+# Apply the difficulty label (gh CLI works fine for labels)
 gh issue edit <ISSUE_NUMBER> \
   --repo akshay0611/havenly \
   --add-label "NEWBIE"   # or ADVENTURER or VETERAN
-
-# Assign the contributor (skip if maintainer said "none")
-gh issue edit <ISSUE_NUMBER> \
-  --repo akshay0611/havenly \
-  --add-assignee <username>
 ```
+
+**IMPORTANT — use the GitHub API for assignment, not `gh issue edit`.**
+
+`gh issue edit --add-assignee` only works for repo collaborators. ELUSOC contributors are external users who are NOT collaborators, so it will always fail with "not found". Use the REST API instead, which can assign anyone who has interacted with the repo:
+
+```bash
+gh api \
+  --method POST \
+  repos/akshay0611/havenly/issues/<ISSUE_NUMBER>/assignees \
+  --field 'assignees[]=<username>'
+```
+
+If this also fails (rare), it means the user has never interacted with the repo at all. In that case, tell the maintainer:
+
+```
+@<username> could not be assigned automatically — they may need to
+comment on the issue first, or you can assign them manually via the
+GitHub UI at: https://github.com/akshay0611/havenly/issues/<ISSUE_NUMBER>
+```
+
+Do NOT try `--add-assignee` via `gh issue edit` as a fallback — it will always fail for external users.
 
 ### Step 5 — Post an assignment comment
 
@@ -101,7 +117,7 @@ gh issue comment <ISSUE_NUMBER> \
 Comment template:
 
 ```
-Hey @<username>! You've been assigned to this issue.
+Hey @<username>! 👋 You've been assigned to this issue.
 
 This is labeled as **ADVENTURER (25 Points)** under ELUSOC 2026.
 
@@ -110,7 +126,7 @@ A few things to keep in mind:
 - Link this issue in your PR with `Closes #<ISSUE_NUMBER>`
 - Feel free to ask questions here if you get stuck
 
-Looking forward to your contribution!
+Looking forward to your contribution! 🚀
 ```
 
 Adjust the label name and points in the comment to match what was actually applied.
@@ -137,6 +153,12 @@ Respect it without pushback. Apply whatever they say.
 
 **Multiple people asked to be assigned:**
 List all of them and let the maintainer choose. Don't pick one yourself.
+
+**Assignment via `gh issue edit --add-assignee` fails:**
+This is expected for external contributors. Always use the REST API path in Step 4 instead. Never retry with `gh issue edit --add-assignee` — it will always fail for non-collaborators.
+
+**`gh api` assignment also fails:**
+The user likely has zero interaction with the repo. Tell the maintainer and provide the direct GitHub UI link to assign manually. Still post the comment in Step 5 so the contributor is notified.
 
 ---
 
