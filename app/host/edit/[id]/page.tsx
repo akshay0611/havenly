@@ -22,7 +22,7 @@ export default function EditPropertyPage({ params }: { params: Promise<{ id: str
     setLoading(false);
   }, [id]);
 
-  const handleSave = (propertyData: any) => {
+  const handleSave = (propertyData: Partial<Property>) => {
     if (!property) return;
     const updatedProperty: Property = {
       ...property,

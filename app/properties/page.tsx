@@ -16,7 +16,7 @@ export default function PropertiesPage() {
   const [sortBy, setSortBy] = useState<SortOption>('featured');
   const [priceFilter, setPriceFilter] = useState({ min: 0, max: 1000 });
   const [ratingFilter, setRatingFilter] = useState(0);
-  const [propertyList, setPropertyList] = useState<Property[]>([]);
+  const [propertyList, setPropertyList] = useState<Property[]>(getStoredProperties());
 
   useEffect(() => {
     setPropertyList(getStoredProperties());

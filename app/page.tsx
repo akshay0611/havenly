@@ -92,7 +92,7 @@ function PropertySection({ title, items, locationName }: PropertySectionProps) {
 
 export default function Home() {
   const [selectedCategory, setSelectedCategory] = useState<string | undefined>();
-  const [propertyList, setPropertyList] = useState<Property[]>([]);
+  const [propertyList, setPropertyList] = useState<Property[]>(getStoredProperties());
 
   useEffect(() => {
     setPropertyList(getStoredProperties());
