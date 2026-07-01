@@ -16,3 +16,6 @@ node_modules
 .DS_Store
 tsconfig.tsbuildinfo
 *.tsbuildinfo
+
+# Ignore app/images to prevent massive binary files from bloating the repo size
+app/images/
